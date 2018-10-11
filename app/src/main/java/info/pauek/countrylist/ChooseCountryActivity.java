@@ -10,6 +10,10 @@ import android.widget.TextView;
 public class ChooseCountryActivity extends AppCompatActivity {
 
     public static final int CHOOSE_COUNTRY = 0;
+
+    // Model
+    private String country;
+
     private TextView country_view;
 
     @Override
@@ -17,7 +21,9 @@ public class ChooseCountryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_choose_country);
 
+        country = "";
         country_view = findViewById(R.id.country_view);
+        country_view.setText(country);
 
         Button btn_choose = findViewById(R.id.btn_choose);
         btn_choose.setOnClickListener(new View.OnClickListener() {
@@ -25,6 +31,7 @@ public class ChooseCountryActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Cridem CountryListActivity _esperant_ un resultat
                 Intent intent = new Intent(ChooseCountryActivity.this, CountryListActivity.class);
+                intent.putExtra("country", country); // Informem del país seleccionat a l'atra activitat
                 startActivityForResult(intent, CHOOSE_COUNTRY);
             }
         });
@@ -36,7 +43,7 @@ public class ChooseCountryActivity extends AppCompatActivity {
             /* Recollim el resultat d'haver cridat a CountryListActivity */
             case CHOOSE_COUNTRY:
                 if (resultCode == RESULT_OK) {
-                    String country = data.getStringExtra("country");
+                    country = data.getStringExtra("country");
                     country_view.setText(country);
                 }
                 break;

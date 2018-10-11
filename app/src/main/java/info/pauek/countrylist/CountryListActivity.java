@@ -35,6 +35,21 @@ public class CountryListActivity extends AppCompatActivity {
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL)
         );
 
+        // Movem la llista al país que hi havia seleccionat
+        Intent intent = getIntent();
+        int position = -1;
+        if (intent != null) {
+            String country = intent.getStringExtra("country");
+            for (int i = 0; i < countries.size(); i++) {
+                if (countries.get(i).equals(country)) {
+                    position = i;
+                    break;
+                }
+            }
+        }
+        country_list_view.scrollToPosition(position);
+
+        // Posem un listener per donar el resultat
         adapter.setOnClickListener(new CountryListAdapter.OnClickListener() {
             @Override
             public void onClick(int position) {
